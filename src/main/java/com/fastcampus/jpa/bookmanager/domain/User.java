@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 @Builder
 @Entity
-@EntityListeners(value = MyEntityListener.class)
+@EntityListeners(value = {MyEntityListener.class, UserEntityListener.class}) // 여러 개 지정 가능
 // @Table(name = "user", indexes = { @Index(columnList = "name")}, uniqueConstraints = { @UniqueConstraint(columnNames = {"email"})})
 public class User implements Auditable {
     @Id // Primary Key(PK)임을 지정

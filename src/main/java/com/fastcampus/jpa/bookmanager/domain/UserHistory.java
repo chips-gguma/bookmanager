@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
@@ -11,7 +12,8 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @Data
-public class UserHistory {
+@EntityListeners(value = MyEntityListener.class)
+public class UserHistory implements Auditable {
     @Id
     @GeneratedValue
     private Long userId;
