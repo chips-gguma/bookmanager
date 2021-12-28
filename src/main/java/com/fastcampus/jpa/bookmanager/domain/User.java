@@ -2,6 +2,9 @@ package com.fastcampus.jpa.bookmanager.domain;
 
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -14,7 +17,7 @@ import java.util.List;
 @Data
 @Builder
 @Entity
-@EntityListeners(value = {MyEntityListener.class, UserEntityListener.class}) // 여러 개 지정 가능
+@EntityListeners(value = {AuditingEntityListener.class, UserEntityListener.class}) // 여러 개 지정 가능
 // @Table(name = "user", indexes = { @Index(columnList = "name")}, uniqueConstraints = { @UniqueConstraint(columnNames = {"email"})})
 public class User implements Auditable {
     @Id // Primary Key(PK)임을 지정
@@ -32,10 +35,12 @@ public class User implements Auditable {
 
     // @Column(name = "crtdat") // db에서 쓰일 컬럼명 지정
     @Column(updatable = false) // 필요시 update 값 저장 X
+    @CreatedDate
     private LocalDateTime createdAt; // 생성 시간
 
     // @Column(nullable = false) // not null
     // @Column(insertable = false) // 필요시 insert 값 저장 X
+    @LastModifiedDate
     private LocalDateTime updatedAt; // 수정 시간
 
 
