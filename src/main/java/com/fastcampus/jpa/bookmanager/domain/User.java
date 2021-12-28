@@ -1,5 +1,7 @@
 package com.fastcampus.jpa.bookmanager.domain;
 
+import com.fastcampus.jpa.bookmanager.domain.listener.Auditable;
+import com.fastcampus.jpa.bookmanager.domain.listener.UserEntityListener;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.annotation.CreatedDate;
@@ -8,18 +10,19 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Slf4j
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor // final이나 @NonNull이 없다면 NoArgsConstructor와 동일
 @Data
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 @Builder
 @Entity
-@EntityListeners(value = {AuditingEntityListener.class, UserEntityListener.class}) // 여러 개 지정 가능
+@EntityListeners(value = {UserEntityListener.class}) // 여러 개 지정 가능
 // @Table(name = "user", indexes = { @Index(columnList = "name")}, uniqueConstraints = { @UniqueConstraint(columnNames = {"email"})})
-public class User implements Auditable {
+public class User extends BaseEntity implements Auditable {
     @Id // Primary Key(PK)임을 지정
     @GeneratedValue
     private Long id;
@@ -34,14 +37,14 @@ public class User implements Auditable {
     private Gender gender;
 
     // @Column(name = "crtdat") // db에서 쓰일 컬럼명 지정
-    @Column(updatable = false) // 필요시 update 값 저장 X
-    @CreatedDate
-    private LocalDateTime createdAt; // 생성 시간
-
-    // @Column(nullable = false) // not null
-    // @Column(insertable = false) // 필요시 insert 값 저장 X
-    @LastModifiedDate
-    private LocalDateTime updatedAt; // 수정 시간
+//    @Column(updatable = false) // 필요시 update 값 저장 X
+//    @CreatedDate
+//    private LocalDateTime createdAt; // 생성 시간
+//
+//    // @Column(nullable = false) // not null
+//    // @Column(insertable = false) // 필요시 insert 값 저장 X
+//    @LastModifiedDate
+//    private LocalDateTime updatedAt; // 수정 시간
 
 
 //    @Transient // 영속성 처리에서 제외되므로 db에 반영 X, 객체에서 따로 쓸 필드가 필요할 때 사용
